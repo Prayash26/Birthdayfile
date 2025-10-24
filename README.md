@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday My Love ❤️ Geeta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* ------------------------- BASE STYLES ------------------------- */
+        body {
+            background: linear-gradient(to right, #ffdde1, #ee9ca7);
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: #fff;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        h1, h2 {
+            font-family: 'Great Vibes', cursive;
+            color: #fff;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .start-screen {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        button {
+            background-color: #ff4da6;
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: 0.3s;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #ff3385;
+            transform: scale(1.05);
+        }
+
+        /* ------------------------- SLIDER ------------------------- */
+        .slider {
+            position: relative;
+            max-width: 500px;
+            margin: 40px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .slides img {
+            width: 100%;
+            display: none; 
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+
+        .slides img.active {
+            display: block;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ------------------------- MESSAGE & FINAL ------------------------- */
+        .message-box {
+            max-width: 700px;
+            margin: 30px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+        }
+
+        .controls {
+            margin: 20px 0;
+        }
+
+        .final-message {
+            margin-top: 40px;
+            font-size: 28px;
+            padding-bottom: 50px;
+        }
+
+        /* ------------------------- ANIMATIONS ------------------------- */
+
+        /* Required for Hearts */
+        #romantic-hearts, #balloon-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 10;
+        }
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: floatHeart 5s linear infinite;
+        }
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh); opacity: 0.5; }
+            100% { transform: translateY(-10vh); opacity: 0; }
+        }
+
+        /* Required for Balloons (using a generic floatUp animation) */
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            bottom: -50px; /* Start off-screen */
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            from { transform: translateY(0) rotate(0deg); opacity: 1; }
+            to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="start-screen" id="startScreen">
+        <h1>A Little Surprise for My Queen 👑</h1>
+        <button id="startBtn">🎀 Open Your Surprise 💖</button>
+    </div>
+
+    <div class="card" id="birthdayCard" style="display:none;">
+      <h2 style="color: #ff4da6;">A Little Moment for Reflection...</h2>
+      <p style="color: #ff4da6;">Preparing the main surprise for my Chotu Don!</p>
+    </div>
+
+    <div id="mainContent" style="display:none; padding-top: 50px;">
+        <h1>Happy Birthday, My Beautiful Geeta 💖</h1>
+
+        <div class="slider">
+            <div class="slides">
+                <img src="images/my1.jpg" alt="memory 1" class="active">
+                <img src="images/my2.jpg" alt="memory 2">
+                <img src="images/my3.jpg" alt="memory 3">
+                <img src="images/my4.jpg" alt="memory 4">
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button id="musicToggleBtn">
+                <i class="fas fa-play"></i> Play Song
+            </button>
+        </div>
+
+        <div class="message-box">
+            <h2>To My Chotu Don 💞</h2>
+            <p>
+                You’re my sunshine, my calm, my chaos — everything I ever wanted and more. 
+                Every moment spent with you feels like magic wrapped in love. 💫 
+                No matter where life takes us, this Panda’s heart will always belong to you. 💞
+            </p>
+        </div>
+
+        <h2 class="final-message">Happy Birthday My Love 🎂💖<br>– Yours, Panda 🐼</h2>
+
+        <div id="romantic-hearts"></div>
+        <div id="balloon-container"></div>
+        
+        <audio id="bgMusic" src="happy-birthday-155461.mp3" loop></audio>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startBtn = document.getElementById('startBtn');
+            const startScreen = document.getElementById('startScreen');
+            const birthdayCard = document.getElementById("birthdayCard"); // Must exist in HTML
+            const mainContent = document.getElementById('mainContent');
+            const music = document.getElementById('bgMusic');
+            const musicToggleBtn = document.getElementById('musicToggleBtn');
+            const slides = document.querySelectorAll('.slides img');
+            let current = 0;
+            let isPlaying = false; 
+
+            // ------------------------------------------------------------------
+            // 1. AUDIO DIAGNOSTICS (Helps debug file path issues)
+            // ------------------------------------------------------------------
+            music.addEventListener('error', (e) => {
+                console.error("Audio Status: FAILED to load. Check 'happy-birthday-155461.mp3' file path.", e);
+                musicToggleBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Song Error';
+                alert("CRITICAL ERROR: The music file was not found. Please check the file path.");
+            });
+
+            // ----------------------------------------------------
+            // 2. Start Button Handler (The Autoplay Fix & Content Flow)
+            // ----------------------------------------------------
+            startBtn.addEventListener('click', () => {
+                // 1. ATTEMPT TO PLAY (The Fix)
+                music.play()
+                    .then(() => {
+                        isPlaying = true;
+                        musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Song'; 
+                        console.log('Playback Status: Music started successfully (allowed by user click)!');
+                    })
+                    .catch(err => {
+                        console.warn('Playback Status: Initial play failed. User must use dedicated button. Error:', err);
+                        musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play Song'; 
+                        isPlaying = false;
+                    });
+
+                // 2. Start Content Flow (Show Card -> 4s Delay -> Show Main Content)
+                startScreen.style.display = 'none';
+                birthdayCard.style.display = 'block';
+
+                setTimeout(() => {
+                    birthdayCard.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    showSlides(); // Start slider
+                    createBalloons(); // Start balloons
+                    createHearts(); // Start hearts
+                }, 4000); 
+            });
+            
+            // ----------------------------------------------------
+            // 3. Dedicated Music Control Button
+            // ----------------------------------------------------
+            musicToggleBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    music.pause();
+                    musicToggleBtn.innerHTML = '<i class="fas fa-play"></i> Play Song';
+                } else {
+                    music.play()
+                        .then(() => {
+                            musicToggleBtn.innerHTML = '<i class="fas fa-pause"></i> Pause Song';
+                        })
+                        .catch(err => {
+                            console.error('Manual play failed:', err);
+                        });
+                }
+                isPlaying = !isPlaying;
+            });
+
+            // ----------------------------------------------------
+            // 4. Image Slider Function 
+            // ----------------------------------------------------
+            function showSlides() {
+                slides.forEach(img => img.classList.remove('active'));
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+                setTimeout(showSlides, 3000); // Loops every 3 seconds
+            }
+
+            // ----------------------------------------------------
+            // 5. Floating Hearts Animation (using the 'romantic-hearts' container)
+            // ----------------------------------------------------
+            function createHearts() {
+                const container = document.getElementById("romantic-hearts");
+                // Use a smaller interval for a dense, constant flow of hearts
+                setInterval(() => {
+                    const heart = document.createElement("div");
+                    heart.classList.add("heart");
+                    heart.textContent = "💖";
+                    // Random horizontal position (using vw)
+                    heart.style.left = `${Math.random() * 100}vw`; 
+                    container.appendChild(heart);
+                    // Remove heart after it floats away
+                    setTimeout(() => heart.remove(), 5000);
+                }, 300); 
+            }
+
+            // ----------------------------------------------------
+            // 6. Floating Balloons Animation (using the 'balloon-container' container)
+            // ----------------------------------------------------
+            function createBalloons() {
+                const container = document.getElementById('balloon-container');
+                // Create a batch of 5 balloons every 4 seconds
+                for (let i = 0; i < 5; i++) {
+                    const balloon = document.createElement('div');
+                    balloon.className = 'balloon';
+                    balloon.style.left = Math.random() * 100 + 'vw';
+                    balloon.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                    // Vary the speed slightly
+                    balloon.style.animationDuration = Math.random() * 5 + 6 + 's'; 
+                    container.appendChild(balloon);
+                    // Remove after duration to prevent DOM clutter
+                    setTimeout(() => balloon.remove(), 12000); 
+                }
+                // Schedule the next batch creation
+                setTimeout(createBalloons, 4000);
+            }
+        });
+    </script>
+</body>
+</html>
